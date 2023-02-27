@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>User Registration</title>
+  <style type="text/css">
+    label {
+        display: inline-block;
+        width: 200px;
+        margin: 5px;
+        text-align: left;
+    }
+    input[type=text], input[type=password], select {
+        display: inline-block;
+        width: 200px;
+        height: 28px;
+        margin-bottom: 8px;
+    }
+    input[type=radio] {
+        margin-left: 45px;
+    }
+    input[type=checkbox] {
+        margin-right: 190px;
+    }
+    button {
+        padding: 5px;
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+<div align="center">
+  <h1>Login</h1>
+  <form action="#" th:action="@{/login}" method="post" th:object="${user}" enctype="multipart/form-data">
+    <table border="0" cellpadding="10">
+
+      <tr>
+        <td>e-mail :</td>
+        <td>
+          <input th:field="*{email}" type="text"/><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>mật khẩu :</td>
+        <td>
+          <input th:field="*{password}" type="password"/><br/>
+        </td>
+      </tr>
+
+
+    </table>
+    <p th:text="${msg}"></p>
+
+    <button type="login">login</button>
+  </form>
+</div>
+</body>
+</html>

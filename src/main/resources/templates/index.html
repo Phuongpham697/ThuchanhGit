@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <title>Product Manager</title>
+  <style>
+    input {
+        height: 30px;
+        font-size: 14px;
+        padding: 4px;
+
+    }
+    img{
+        height: 100px;
+        width: 50px;
+         object-fit: contain;
+    }
+</style>
+</head>
+<body>
+<div align="left"><a th:href="@{/logout}">Logout</a></div>
+<div align="center">
+  <h1>User List</h1>
+  <a th:href="@{/new}">Create New user</a>
+  <br/><br/>
+  <form th:action="@{/search}">
+    Search: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+    &nbsp;
+    <input type="submit" value="Search" />
+    &nbsp;
+    <input type="reset" value="Clear" id="btnClear" onclick="clearSearch()" />
+  </form>
+  <br/><br/>
+  <table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+    <tr>
+      <th>User ID</th>
+      <th>fullname</th>
+      <th>email</th>
+      <th>photos</th>
+      <th>password</th>
+      <th>Birthday</th>
+      <th>gender</th>
+      <th>profession</th>
+      <th>married</th>
+      <th>note</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${listUsers}">
+      <td th:text="${user.id}">id</td>
+      <td th:text="${user.fullname}">fullname</td>
+      <td th:text="${user.email}">email</td>
+      <td><img th:src="@{images/}+${user.photo}" alt="ko the hien thi"></td>
+      <td th:text="${user.password}">password</td>
+      <td th:text="${user.birthday}">birthday</td>
+      <td th:text="${user.gender}">gender</td>
+      <td th:text="${user.profession}">profession</td>
+      <td th:text="${user.married}">married</td>
+      <td th:text="${user.note}">note</td>
+      <td>
+        <a th:href="@{'/edit/' + ${user.id}}">Edit</a>
+        &nbsp;&nbsp;&nbsp;
+        <a th:href="@{'/delete/' + ${user.id}}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div>&nbsp;</div>
+  <div th:if="${totalPages > 1}">
+    Total Items: [[${totalItems}]]
+    &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+
+    <a th:if="${currentPage > 1}" th:href="@{'/page/1'}">First</a>
+    <span th:unless="${currentPage > 1}">First</span>
+    &nbsp;&nbsp;
+
+    <a th:if="${currentPage > 1}" th:href="@{'/page/' + ${currentPage - 1}}">Previous</a>
+    <span th:unless="${currentPage > 1}">Previous</span>
+
+    &nbsp;&nbsp;
+
+    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+            <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+            <span th:unless="${currentPage != i}">[[${i}]]</span>
+            &nbsp;
+        </span>
+
+    <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+    <span th:unless="${currentPage < totalPages}">Next</span>
+    &nbsp;&nbsp;
+
+    <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
+    <span th:unless="${currentPage < totalPages}">Last</span>
+  </div>
+</div>
+<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/indexUser}]]";
+    }
+</script>
+</body>
+</html>
